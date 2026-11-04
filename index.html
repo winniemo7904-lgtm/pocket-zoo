@@ -208,12 +208,14 @@ button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation
 #home .music-switch[aria-pressed="true"]{background:#d2f0aaef!important;border-color:#5d8d37!important}
 .task-claim-all{display:block;width:100%;min-height:53px;margin:10px 0 13px;font-size:15px!important;background:#d3efaa!important;border:3px solid #629c45!important;border-radius:12px;box-shadow:0 3px #a3b887}
 .task-claim-all:disabled{background:#e5e0d2!important;opacity:.7}
+#home .music-switch{left:auto!important;right:1.3%!important;top:1.2%!important;width:15.5%!important;min-width:0!important;min-height:0!important;height:8.7%!important;max-height:79px!important;display:grid;place-items:center;line-height:1.15;font-size:13px!important;padding:4px!important;background:linear-gradient(#fff4db,#e9bc7d)!important;box-shadow:inset 0 2px #fff8ed,0 3px #6b4628!important}
+#home .home-version{top:11%!important;right:2%!important;font-size:10px!important}
 </style></head>
 <body>
 <div id="game">
   <section id="home" aria-label="口袋動物園開始選單">
 <span class="home-version">遊戲測試版 v1.10</span>
-<button type="button" id="homeMusic" class="music-switch" data-home="music" aria-label="切換開始畫面音樂" aria-pressed="false">♫ 主題音樂：關</button>
+<button type="button" id="homeMusic" class="music-switch" data-home="music" aria-label="切換開始畫面音樂" aria-pressed="false">♫ 關</button>
 <button type="button" class="new" data-home="new" aria-label="開始新遊戲"><span class="sr-only">開始新遊戲</span></button>
 <button type="button" class="continue" data-home="continue" aria-label="繼續遊戲"><span class="sr-only">繼續遊戲</span></button>
 <button type="button" class="setting" data-home="settings" aria-label="遊戲設定"><span class="sr-only">設定</span></button>
@@ -439,7 +441,7 @@ let soundUnlocked=false,menuMusicIndex=0;
 const menuMelody=[523,659,784,988,784,659,587,698,880,1046,880,698,659,784,988,1175,1046,880,784,659,587,698,784,523];
 const menuBass=[262,330,349,294,262,349,392,294];
 function startMenuMusic(){stopMusic();if(!s.music||document.hidden||!soundUnlocked)return;const play=()=>{if(!s.music||document.hidden)return;const i=menuMusicIndex++;tone(menuMelody[i%menuMelody.length],.014,.21,'triangle');if(i%3===0)tone(menuBass[Math.floor(i/3)%menuBass.length],.011,.22,'sine',.035);if(i%12===7){tone(1450,.0035,.075,'sine',.07);tone(1680,.003,.065,'sine',.17)}};play();musicInterval=setInterval(play,320)}
-function updateHomeMusicUI(){const b=$('homeMusic');if(b){b.textContent=s.music?'♫ 主題音樂：開':'♫ 主題音樂：關';b.setAttribute('aria-pressed',String(!!s.music))}}
+function updateHomeMusicUI(){const b=$('homeMusic');if(b){b.textContent=s.music?'♫ 開':'♫ 關';b.setAttribute('aria-pressed',String(!!s.music));b.setAttribute('aria-label',s.music?'關閉開始畫面音樂':'開啟開始畫面音樂')}}
 const melody=[659,784,880,784,659,587,523,587,659,784,988,880,784,659,587,523,523,659,784,659,587,523,440,523,587,659,784,988,880,784,659,587];
 const bassline=[262,262,220,220,196,196,220,246];
 function startMusic(){stopMusic();if(!s.music||document.hidden)return;const play=()=>{if(!s.music||document.hidden)return;const i=musicIndex++;const note=melody[i%melody.length];tone(note,.013,.17,'triangle');if(i%2===0)tone(bassline[Math.floor(i/4)%bassline.length],.012,.23,'sine',.03);if(i%4===3)tone(1568,.004,.05,'square',.01)};play();musicInterval=setInterval(play,285)}
