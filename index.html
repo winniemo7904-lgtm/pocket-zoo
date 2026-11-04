@@ -1,0 +1,159 @@
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#648b50"><title>口袋動物園 Pocket Zoo｜手機試玩 v1.5</title><style>html,body{margin:0;min-height:100%;background:#e5e3d4}body{display:flex;align-items:center;justify-content:center;padding:env(safe-area-inset-top) 4px env(safe-area-inset-bottom);box-sizing:border-box;}@media(max-width:500px){body{padding:0}#pzi14{height:100dvh!important;max-width:none!important;border-radius:0!important;}} </style></head><body><div id="pzi14" class="pzi">
+  <section id="intro" class="intro" aria-label="首次遊戲設定">
+    <div class="introcard">
+      <div class="intrologo">🌿 🐾 🌿<h2>口袋動物園</h2><small>Pocket Zoo · 開始新的故事</small></div>
+      <label for="zooInput">動物園名稱 <span>最多 18 字</span></label>
+      <input id="zooInput" placeholder="例如：森林小天地" maxlength="18" value="口袋動物園" autocomplete="off">
+      <label for="keeperInput">園長姓名 <span>最多 12 字</span></label>
+      <input id="keeperInput" placeholder="例如：小園長" maxlength="12" autocomplete="off">
+      <fieldset class="gender"><legend>園長性別</legend><label><input type="radio" name="keeperGender" value="female"> 女性</label><label><input type="radio" name="keeperGender" value="male"> 男性</label><label><input type="radio" name="keeperGender" value="none" checked> 不指定</label></fieldset>
+      <p class="intro-label">選擇動物頭像（12 選 1）</p>
+      <div class="avatars" id="avatars"></div>
+      <div id="introErr" class="intro-error" role="alert"></div>
+      <button id="introStart" class="introstarter">🐾 確認資料，開始經營</button>
+      <small class="introhint">僅儲存在此瀏覽器，不需要填寫真實姓名。</small>
+    </div>
+  </section>
+  <div class="top">
+    <div class="brand"><strong>🐾 <span id="zooNameLabel">口袋動物園</span> <small>v1.5</small></strong><button data-go="settings">⚙️ 設定</button></div>
+    <div class="ownerline" id="ownerLabel">🌱 先建立園長資料</div>
+    <div class="time"><span id="di">第 1 天</span><strong id="ti">09:00</strong><span id="phase">待開園</span></div>
+    <div class="counts"><div>🪙 金幣<b id="money">2,500</b></div><div>👥 今日遊客<b id="visitors">0</b></div><div>📖 收藏<b id="owned">0 / 7</b></div></div>
+    <div class="speeds"><button data-speed="1" class="active">1×</button><button data-speed="2">2×</button><button data-speed="4">4×</button></div>
+  </div>
+  <div class="tabs"><button data-go="zoo" class="active">🌳 園區</button><button data-go="build">🔨 建造</button><button data-go="puzzle">🧩 拼圖</button><button data-go="book">📖 圖鑑</button></div>
+  <div class="stage" id="stage"></div>
+  <div class="foot"><button id="open" data-open="1">🌅 09:00 手動開園</button></div>
+</div>
+<style>
+#pzi14{box-sizing:border-box;width:100%;max-width:455px;height:clamp(470px,76dvh,650px);margin:0 auto;display:flex;flex-direction:column;border:3px solid #805d3a;border-radius:14px;overflow:hidden;background:#faf0dc;color:#432f20;font:13px/1.45 system-ui,-apple-system,"Noto Sans TC",sans-serif}
+#pzi14 *{box-sizing:border-box}#pzi14 button{cursor:pointer;touch-action:manipulation;font:inherit;-webkit-tap-highlight-color:transparent;color:#482f1b}#pzi14 button:disabled{opacity:.5;cursor:not-allowed}#pzi14 button:focus-visible{outline:3px solid #2175af;outline-offset:2px}
+#pzi14 .top{background:#66884e;padding:8px;color:#fff5db;flex-shrink:0}
+#pzi14 .brand{display:flex;align-items:center;justify-content:space-between;gap:6px}#pzi14 .brand strong{font-size:17px}#pzi14 .brand small{font-size:10px}#pzi14 .brand button{background:#fff1d5;border:2px solid #bd9669;border-radius:8px;padding:4px 8px;font-weight:800;font-size:11px}
+#pzi14 .time{display:flex;justify-content:space-between;align-items:center;margin:5px 0;gap:6px}#pzi14 .time strong{font-size:24px;color:#ffedb6}#pzi14 .time span{font-size:11px}#pzi14 #phase{background:#e7f0d6;color:#385b30;padding:3px 8px;border-radius:20px;font-weight:900}
+#pzi14 .counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}#pzi14 .counts div{background:#fff8e7;border:2px solid #ad875b;border-radius:8px;padding:5px 3px;color:#573e29;font-size:10px;text-align:center;font-weight:800}#pzi14 .counts b{font-size:17px;color:#302116;display:block;font-variant-numeric:tabular-nums}
+#pzi14 .speeds{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-top:6px}#pzi14 .speeds button{border:2px solid #bcd1a9;border-radius:7px;background:#e4efd4;padding:5px;font-weight:900}#pzi14 .speeds button.active{background:#ffdb82;border-color:#a07b47}
+#pzi14 .tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;flex-shrink:0;padding:5px;background:#e3c18d}#pzi14 .tabs button{border:2px solid #b08b5d;border-radius:8px;background:#fff3db;padding:8px 1px;font-weight:900;font-size:12px}#pzi14 .tabs button.active{background:#b5dc8b;border-color:#739956}
+#pzi14 .stage{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;background:#fbf0dd;padding:10px}#pzi14 .stage h3{margin:0 0 8px;font-size:15px}#pzi14 .stage .tip{padding:8px;background:#fff9ed;border:1px solid #d2b88c;border-radius:8px;font-size:11px;line-height:1.5;margin:8px 0;color:#59412d}
+#pzi14 .map{border:5px solid #668b4c;border-radius:12px;background:repeating-linear-gradient(45deg,#a5d18c,#a5d18c 20px,#9bc985 20px,#9bc985 40px);padding:9px;position:relative}#pzi14 .entrance{text-align:center;background:#e7c18b;border:3px solid #81593a;border-radius:14px;margin-bottom:8px;font-weight:950;padding:8px}
+#pzi14 .land{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}#pzi14 .hab{border:3px solid #856041;border-radius:8px;text-align:center;background:#cce1b2;padding:4px;min-width:0;min-height:115px;display:flex;flex-direction:column;align-items:center;justify-content:space-between}#pzi14 .hab.sand{background:#e9d49e}#pzi14 .hab.river{background:#b6dfd3}#pzi14 .hab img{width:100px;height:77px;object-fit:contain;image-rendering:pixelated}#pzi14 .hab strong{background:#ffe9bd;border:1px solid #a48a60;border-radius:7px;padding:3px 4px;font-size:11px;display:block;width:100%}#pzi14 .hab.empty img{opacity:.14;filter:grayscale(1)}
+#pzi14 .shop{background:#ffefce;border:2px solid #b2895d;border-radius:9px;text-align:center;padding:10px;margin-top:9px}
+#pzi14 .cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#pzi14 .card{border:2px solid #b79b74;background:#fff9e9;border-radius:10px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:9px 5px;text-align:center;min-width:0}#pzi14 .card img{width:90px;height:70px;object-fit:contain;image-rendering:pixelated}#pzi14 .card small{font-size:10px;color:#785c3e}#pzi14 .card button{margin-top:auto;background:#c4e59d;border:2px solid #86a05c;border-radius:7px;width:100%;padding:8px 2px;font-weight:900;font-size:11px}
+#pzi14 .book{border:7px solid #a77a4b;border-left-width:15px;border-radius:9px 14px 14px 9px;padding:10px;background:#fff1d0;color:#39271a!important;-webkit-text-fill-color:#39271a!important}#pzi14 .book *{color:#39271a!important;-webkit-text-fill-color:#39271a!important}#pzi14 .book .heading{text-align:center;border-bottom:2px solid #d8bf95;font-size:16px;font-weight:950;padding-bottom:7px}#pzi14 .spread{display:grid;grid-template-columns:minmax(0,44%) minmax(0,56%);gap:5px;margin:9px 0}#pzi14 .spread p{margin:0 0 7px;font-size:11px;line-height:1.6;overflow-wrap:anywhere}#pzi14 .page-turn{display:flex;gap:7px}#pzi14 .page-turn button{flex:1;border:2px solid #9d784b;border-radius:7px;background:#e5c794;padding:9px 2px;font-weight:900;font-size:11px}
+#pzi14 .mosaic{display:grid;width:100%;max-width:145px;aspect-ratio:1;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:2px;padding:3px;border:3px solid #956e43;border-radius:8px;background:#987346;margin:0 auto 5px;overflow:hidden}#pzi14 .tile{position:relative;overflow:hidden;display:grid;place-items:center;background:#e5d8ba;font-size:17px;font-weight:900;color:#8c7960;min-width:0;min-height:0}#pzi14 .tile.revealed{background:#cde4b5}#pzi14 .tile .part{position:absolute;inset:0;background-size:300% 300%;background-repeat:no-repeat;image-rendering:pixelated}#pzi14 .fraction{text-align:center;font-size:11px;font-weight:850;color:#60452a}#pzi14 .bar{height:9px;border:1px solid #ab8b59;border-radius:8px;background:#e8dac0;overflow:hidden;margin:10px 0}#pzi14 .bar div{height:100%;background:#8bc06c}
+#pzi14 .chooser{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:8px}#pzi14 .chooser button{padding:7px;border:2px solid #b39367;border-radius:7px;background:#fff7e7;font-size:11px;font-weight:850}#pzi14 .chooser button.active{background:#c9e5a7;border-color:#719550}#pzi14 .large-mosaic{max-width:175px;margin:9px auto}#pzi14 .actions{display:flex;gap:6px;flex-wrap:wrap}#pzi14 .actions button{flex:1;min-width:40%;border:2px solid #b18c56;background:#ffe2a3;border-radius:8px;padding:9px 2px;font-weight:850;font-size:11px}
+#pzi14 .setting{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid #d8bd9a;border-radius:9px;background:#fff9ec;padding:12px;margin-bottom:8px}#pzi14 .setting small{display:block;color:#725741;font-size:11px}#pzi14 .setting button{background:#eadbc8;border:2px solid #b3946e;border-radius:20px;padding:8px;font-weight:850;min-width:75px}#pzi14 .setting button.on{background:#b7df8c;border-color:#7d9d54}
+#pzi14 .foot{background:#e8c694;padding:8px;border-top:3px solid #a07a4d;flex-shrink:0}#pzi14 .foot button{width:100%;border:2px solid #81974f;border-radius:8px;background:#bade8b;color:#3c562e;padding:10px;font-size:14px;font-weight:950}
+
+#pzi14{position:relative}
+#pzi14 .ownerline{color:#fff7e1;font-size:10px;margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#pzi14 .brand strong{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#pzi14 .intro{position:absolute;inset:0;z-index:15;background:linear-gradient(#63924f,#afd48b);padding:12px;display:flex;align-items:stretch;justify-content:center;overflow:hidden}
+#pzi14 .intro.hidden{display:none}
+#pzi14 .introcard{width:100%;background:#fff4d9;color:#3e2b1c;border:5px solid #9a6d40;border-radius:17px;overflow-y:auto;overscroll-behavior:contain;padding:14px;box-shadow:0 7px #426535;min-height:0}
+#pzi14 .intrologo{text-align:center;background:#e2f0c7;border:2px solid #b1d391;border-radius:12px;padding:8px 2px;margin-bottom:12px;font-size:20px}
+#pzi14 .intrologo h2{font-size:23px;line-height:1.2;margin:2px 0;color:#553823}
+#pzi14 .intrologo small{display:block;color:#67533c;font-size:11px}
+#pzi14 .introcard>label{display:flex;justify-content:space-between;font-weight:900;margin:10px 0 4px;font-size:12px}
+#pzi14 .introcard>label span{color:#826f57;font-size:10px;font-weight:500}
+#pzi14 .introcard>input{background:#fffdfa;color:#33251b;border:2px solid #b7956d;border-radius:9px;padding:10px;width:100%;font:inherit;font-size:15px}
+#pzi14 .gender{border:0;padding:0;margin:12px 0;display:flex;gap:7px;flex-wrap:wrap}
+#pzi14 .gender legend{font-weight:900;font-size:12px;margin-bottom:6px}
+#pzi14 .gender label{flex:1;min-width:72px;background:#f5e5c6;border:1px solid #b89b76;border-radius:8px;padding:8px 4px;font-size:12px;white-space:nowrap;text-align:center}
+#pzi14 .intro-label{font-size:12px;font-weight:900;margin:12px 0 6px}
+#pzi14 .avatars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+#pzi14 .avatar{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:1px;background:#fff9e8;color:#382a21;border:2px solid #b89d76;border-radius:8px;min-height:63px;padding:4px 1px}
+#pzi14 .avatar span{font-size:25px;line-height:1.1}#pzi14 .avatar small{font-size:9px}
+#pzi14 .avatar.chosen{border-color:#5b9146;background:#d5eebd;box-shadow:inset 0 0 0 1px #5b9146}
+#pzi14 .intro-error{font-size:11px;color:#b1261c;min-height:16px;margin:6px 0}
+#pzi14 .introstarter{position:sticky;bottom:0;z-index:2;display:block;width:100%;border:2px solid #698743;background:#bbde83;color:#334c26;border-radius:10px;padding:12px 4px;font-weight:900;font-size:14px}
+#pzi14 .introhint{display:block;font-size:10px;text-align:center;color:#77654b;margin-top:8px}
+@media(max-height:710px){#pzi14 .introcard{padding:10px}#pzi14 .intrologo{padding:6px;margin-bottom:6px}#pzi14 .intrologo h2{font-size:19px}#pzi14 .introcard>label{margin:7px 0 3px}#pzi14 .gender{margin:7px 0}#pzi14 .avatar{min-height:54px}#pzi14 .avatar span{font-size:22px}}
+#pzi14 .profilebox{background:#fff8e5;border:1px solid #bba179;border-radius:9px;padding:11px;margin:10px 0;color:#44301d}
+#pzi14 .editprofile{background:#f6deb3;border:2px solid #a67a4c;border-radius:8px;padding:9px;color:#4e3922;font-weight:850}
+</style>
+<script>
+(function(){
+'use strict';
+var root=document.getElementById('pzi14');if(!root||root.dataset.ready)return;root.dataset.ready='1';
+var q=function(id){return root.querySelector('#'+id)};
+var A=[
+{id:'capy',name:'水豚',cost:400,hab:'濕地',food:'青草',latin:'Hydrochoerus hydrochaeris',bio:'水豚是體型最大的現生囓齒類動物，擅長游泳。'},
+{id:'meer',name:'狐獴',cost:550,hab:'沙地',food:'昆蟲',latin:'Suricata suricatta',bio:'狐獴會輪流擔任哨兵，替群體注意周遭動靜。'},
+{id:'panda',name:'小貓熊',cost:900,hab:'森林',food:'竹葉',latin:'Ailurus fulgens',bio:'小貓熊擅長爬樹，蓬鬆尾巴能協助平衡。'},
+{id:'otter',name:'水獺',cost:700,hab:'溪流',food:'魚、蟹與貝類',latin:'Aonyx cinereus',bio:'亞洲小爪水獺前爪靈活，喜歡在溪流附近覓食。'},
+{id:'elephant',name:'大象',cost:1800,hab:'草原',food:'草與樹葉',latin:'Elephas maximus',bio:'亞洲象會用長鼻子取食、喝水，也會進行泥浴。'},
+{id:'penguin',name:'非洲企鵝',cost:1100,hab:'海岸',food:'魚',latin:'Spheniscus demersus',bio:'非洲企鵝生活在非洲南部沿岸，擅長游泳。',req:9},
+{id:'giraffe',name:'長頸鹿',cost:1400,hab:'草原',food:'樹葉',latin:'Giraffa spp.',bio:'長頸鹿能利用長頸部取得高處的樹葉。',req:9}
+];
+function sprite(a){var c=document.createElement('canvas');c.width=48;c.height=48;var g=c.getContext('2d');if(!g)return '';function r(x,y,w,h,col){g.fillStyle=col;g.fillRect(x,y,w,h)}
+var color={capy:'#b7814c',meer:'#ae7e46',panda:'#c6693a',otter:'#95623e',elephant:'#9eaaa9',penguin:'#364655',giraffe:'#e4b46c'}[a.id];
+if(a.id==='penguin'){r(14,6,20,32,color);r(19,14,10,25,'#fff5e1');r(18,13,4,5,'#24313c');r(27,13,4,5,'#24313c');r(22,20,6,4,'#e8a84d');r(12,19,5,16,color);r(32,19,5,16,color);r(14,38,9,5,'#e7ab5a');r(26,38,9,5,'#e7ab5a')}
+else if(a.id==='giraffe'){r(7,23,29,15,color);r(28,5,8,25,color);r(28,5,13,10,'#f7cf87');r(29,1,3,7,'#895d3b');r(37,1,3,7,'#895d3b');r(11,37,5,9,'#a67a44');r(29,37,5,9,'#a67a44');r(13,26,7,5,'#a87b44');r(26,30,6,5,'#a87b44');r(32,16,4,5,'#a87b44');r(38,9,2,2,'#342821')}
+else if(a.id==='elephant'){r(8,17,26,20,color);r(25,13,17,23,color);r(12,34,7,11,'#7a898b');r(29,34,7,11,'#7a898b');r(34,29,10,13,color);r(28,19,9,13,'#c1cac7');r(37,20,3,3,'#303a3c')}
+else if(a.id==='meer'){r(19,17,14,25,color);r(18,6,15,15,'#dfbb83');r(17,4,5,8,color);r(30,4,5,8,color);r(21,13,3,3,'#302921');r(29,13,3,3,'#302921');r(20,39,5,8,color);r(29,39,5,8,color)}
+else{r(8,24,28,14,color);r(29,15,14,22,color);r(13,36,7,8,color);r(31,36,7,8,color);r(33,21,10,11,a.id==='panda'?'#ffe7c2':'#d8ae7d');r(37,24,2,2,'#2c261e');r(41,29,5,3,'#59402c');if(a.id==='panda'){r(30,11,5,8,color);r(39,11,5,8,color);r(3,31,10,5,'#a76535')}if(a.id==='otter')r(2,30,10,6,color);if(a.id==='capy')r(33,13,5,5,color)}
+return c.toDataURL('image/png')}
+A.forEach(function(a){a.img=sprite(a)});
+var s={day:1,min:540,mode:'ready',speed:1,coins:2500,visitors:0,animals:{},pieces:{penguin:0,giraffe:0},tab:'zoo',before:'zoo',target:'penguin',book:5,explored:0,stall:false,music:false,fx:false,acc:0,last:Date.now(),msg:'先到「建造」購買動物棲地。',profile:null};
+var avatars=[['capy','🦫','水豚'],['otter','🦦','水獺'],['elephant','🐘','大象'],['panda','🐼','小貓熊'],['penguin','🐧','企鵝'],['giraffe','🦒','長頸鹿'],['cat','🐱','貓咪'],['dog','🐶','狗狗'],['fox','🦊','狐狸'],['rabbit','🐰','兔子'],['bear','🐻','棕熊'],['koala','🐨','無尾熊']];
+var avatarSelected='capy',editProfile=false,storageOK=true;
+var STORAGE_KEY='pocket_zoo_playable_v15';
+function persist(){try{var saved={day:s.day,min:s.min,mode:s.mode,speed:s.speed,coins:s.coins,visitors:s.visitors,animals:s.animals,pieces:s.pieces,tab:s.tab,target:s.target,book:s.book,explored:s.explored,stall:s.stall,music:s.music,fx:s.fx,msg:s.msg,profile:s.profile};localStorage.setItem(STORAGE_KEY,JSON.stringify(saved));storageOK=true}catch(e){storageOK=false}}
+function restore(){try{var raw=localStorage.getItem(STORAGE_KEY);if(!raw)return;var d=JSON.parse(raw);if(!d||typeof d!=='object'||!d.profile||typeof d.profile.name!=='string')return;
+var keys=['day','min','mode','speed','coins','visitors','animals','pieces','tab','target','book','explored','stall','music','fx','msg','profile'];keys.forEach(function(k){if(Object.prototype.hasOwnProperty.call(d,k))s[k]=d[k]});
+if(s.mode==='running')s.mode='paused';if(![1,2,4].includes(s.speed))s.speed=1;
+if(!Number.isFinite(s.coins))s.coins=2500;if(!Number.isFinite(s.min)||s.min<540||s.min>1260)s.min=540;
+if(!s.animals||typeof s.animals!=='object')s.animals={};if(!s.pieces||typeof s.pieces!=='object')s.pieces={penguin:0,giraffe:0};
+s.last=Date.now();s.acc=0;s.music=false; // restoring audio preference won't bypass mobile autoplay restrictions
+}catch(e){storageOK=false}}
+restore();
+function encode(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function selectedAvatar(){var a=avatars.find(function(a){return a[0]===s.profile?.avatar});return a?a[1]:'🐾'}
+function drawAvatars(){q('avatars').innerHTML=avatars.map(function(a){return '<button type="button" data-avatar="'+a[0]+'" class="avatar '+(avatarSelected===a[0]?'chosen':'')+'" aria-pressed="'+(avatarSelected===a[0])+'"><span>'+a[1]+'</span><small>'+a[2]+'</small></button>'}).join('')}
+function openProfile(edit){editProfile=!!edit;avatarSelected=s.profile?.avatar||'capy';q('zooInput').value=s.profile?.name||'口袋動物園';q('keeperInput').value=s.profile?.keeper||'';var g=s.profile?.gender||'none';root.querySelectorAll('[name=keeperGender]').forEach(function(i){i.checked=i.value===g});q('introStart').textContent=edit?'儲存園長資料':'🐾 確認資料，開始經營';q('introErr').textContent='';drawAvatars();q('intro').classList.remove('hidden')}
+function closeProfile(){q('intro').classList.add('hidden')}
+
+var index=function(id){return A.findIndex(function(a){return a.id===id})};var animal=function(id){return A[index(id)]};var nAnimals=function(){return Object.keys(s.animals).length};var fmt=function(n){return Math.round(n).toLocaleString('zh-TW')};var time=function(m){return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0')};var revealedOrder=[4,1,3,5,7,0,2,6,8];
+function pc(a){return a.req?Math.min(9,s.pieces[a.id]||0):s.animals[a.id]?9:0}
+function mosaic(a){var n=pc(a),str='<div class="mosaic">';for(var i=0;i<9;i++){var yes=revealedOrder.slice(0,n).indexOf(i)!==-1;var x=(i%3)*50,y=Math.floor(i/3)*50;str+='<div class="tile '+(yes?'revealed':'')+'">'+(yes?'<div class="part" style="background-image:url('+a.img+');background-position:'+x+'% '+y+'%"></div>':'?')+'</div>'}return str+'</div>'}
+function header(){q('zooNameLabel').textContent=s.profile?.name||'口袋動物園';q('ownerLabel').textContent=s.profile?(selectedAvatar()+' 園長：'+s.profile.keeper):'🌱 先建立園長資料';q('di').textContent='第 '+s.day+' 天';q('ti').textContent=time(s.min);q('phase').textContent={ready:'待開園',running:'營業中',paused:'已暫停',closed:'已閉園'}[s.mode];q('money').textContent=fmt(s.coins);q('visitors').textContent=fmt(s.visitors);q('owned').textContent=nAnimals()+'/7';q('open').textContent={ready:'🌅 09:00 手動開園',running:'⏸ 暫停營業',paused:'▶ 繼續營業',closed:'🌅 手動開啟第 '+(s.day+1)+' 天'}[s.mode];root.querySelectorAll('[data-speed]').forEach(function(b){b.classList.toggle('active',+b.dataset.speed===s.speed)});root.querySelectorAll('[data-go]').forEach(function(b){b.classList.toggle('active',b.dataset.go===s.tab)})}
+function zoo(){return '<div class="tip">🌿 '+s.msg+' 拖動園區列表，點擊棲地可以開啟建造。</div><div class="map"><div class="entrance">🐾 動物園入口 🎟️ '+(s.mode==='running'?'遊客入園中':'準備營業')+'</div><div class="land">'+A.map(function(a){var own=!!s.animals[a.id];return '<button data-buyview="'+a.id+'" class="hab '+(a.hab==='沙地'?'sand':a.hab==='溪流'?'river':'')+' '+(!own?'empty':'')+'"><img src="'+a.img+'" alt=""><strong>'+(own?a.name:'＋ '+a.name)+'</strong></button>'}).join('')+'</div><div class="shop">'+(s.stall?'🌭🥤 美食小站已營業':'🌭🥤 美食小站（尚未建造）')+'</div></div>'}
+function build(){return '<h3>🔨 建造棲地</h3><div class="tip">初始 5 種動物直接用金幣購買；企鵝和長頸鹿需先拼完整。</div><div class="cards">'+A.map(function(a){var owned=!!s.animals[a.id],locked=!!a.req&&pc(a)<a.req;return '<div class="card"><img src="'+a.img+'" alt="'+a.name+'"><b>'+a.name+'</b><small>'+a.hab+(a.req?' · 拼圖 '+pc(a)+'/9':' · 初始開放')+'</small><button data-buy="'+a.id+'" '+(locked?'disabled':'')+'>'+(owned?'🥕 餵食 30':locked?'🔒 尚未拼完':'🪙 '+a.cost+' 建造')+'</button></div>'}).join('')+'<div class="card"><b>🌭🥤 小吃攤</b><small>遊客自動購買熱狗、汽水</small><button data-buy="stall" '+(s.stall?'disabled':'')+'>'+(s.stall?'✓ 已建造':'🪙 500 建造')+'</button></div></div>'}
+function puzzle(){var a=animal(s.target),n=pc(a);return '<h3>🧩 動物拼圖</h3><div class="tip">每找到一片，就會露出動物身體的一部分。圖鑑左頁也會同步更新。</div><div class="chooser">'+A.filter(function(a){return a.req}).map(function(a){return '<button data-target="'+a.id+'" class="'+(a.id===s.target?'active':'')+'">'+a.name+' '+pc(a)+'/9</button>'}).join('')+'</div><div class="large-mosaic">'+mosaic(a)+'</div><div class="fraction">'+a.name+' 拼圖 '+n+'/9</div><div class="bar"><div style="width:'+(n/9*100)+'%"></div></div><div class="actions"><button data-collect="1">🌿 今日探索 +1</button><button data-collect="3">🎁 試玩 +3 片</button><button data-view="'+a.id+'">📖 看左頁拼圖</button></div><div class="tip">'+(n===9?'🎉 拼圖完成，現在可以用金幣建造！':s.msg)+'</div>'}
+function book(){var a=A[s.book],n=pc(a),owned=!!s.animals[a.id];return '<h3>📖 動物百科圖鑑</h3><div class="chooser"><button data-book="penguin">🐧 企鵝</button><button data-book="giraffe">🦒 長頸鹿</button></div><div class="book"><div class="heading">'+a.name+' · '+(s.book+1)+'/7</div><div class="spread"><div>'+mosaic(a)+'<div class="fraction">'+(a.req?'拼圖 '+n+'/9':owned?'✓ 已收藏':'尚未購買')+'</div></div><div><p><b>'+(owned?a.name:n===9?'拼圖已完成':'尚未入住')+'</b></p>'+(owned?'<p><i>'+a.latin+'</i></p><p>棲地：'+a.hab+'<br>食物：'+a.food+'</p><p>'+a.bio+'</p>':'<p>'+(a.req?'已找到 '+n+'/9 片；左側會逐塊拼出完整身體。':'使用金幣建造棲地後，可閱讀完整動物百科。')+'</p>')+'</div></div><div class="bar"><div style="width:'+(n/9*100)+'%"></div></div><div class="page-turn"><button data-flip="-1">❮ 上一頁</button><button data-flip="1">下一頁 ❯</button></div></div><div class="tip">'+(n===9?'✅ 動物已完整顯示。': '💡 收集的每片拼圖，都會對應左頁的一個身體區塊。')+'</div>'}
+function settings(){return '<h3>⚙️ 個人資料與聲音設定</h3><div class="profilebox"><b>'+selectedAvatar()+' '+encode(s.profile?.keeper||'園長')+'</b><div>'+encode(s.profile?.name||'口袋動物園')+'</div><button class="editprofile" data-editprofile="1">✏️ 修改園長資料</button></div><div class="setting"><div><b>🎵 背景音樂</b><small>原創輕柔循環旋律</small></div><button class="'+(s.music?'on':'')+'" data-audio="music">'+(s.music?'開啟 ✓':'關閉')+'</button></div><div class="setting"><div><b>🔔 操作音效</b><small>點擊、翻頁、領取拼圖</small></div><button class="'+(s.fx?'on':'')+'" data-audio="fx">'+(s.fx?'開啟 ✓':'關閉')+'</button></div><div class="actions"><button data-audio="test">🔊 試聽音效</button><button data-back="1">返回遊戲</button></div><div class="tip">需手動開啟聲音。手機靜音模式及瀏覽器限制可能影響播放。</div>'}
+function render(reset){header();q('stage').innerHTML=s.tab==='zoo'?zoo():s.tab==='build'?build():s.tab==='puzzle'?puzzle():s.tab==='book'?book():settings();if(reset)q('stage').scrollTop=0}
+var ac=null,musicTimer=null,musicN=0;
+function audio(){try{var C=window.AudioContext||window.webkitAudioContext;if(!C)return null;if(!ac)ac=new C();if(ac.state==='suspended')ac.resume().catch(function(){});return ac}catch(e){return null}}
+function tone(hz,volume){var a=audio();if(!a)return;try{var osc=a.createOscillator(),gain=a.createGain(),t=a.currentTime;osc.frequency.value=hz;osc.type='sine';gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(volume||.018,t+.02);gain.gain.exponentialRampToValueAtTime(.0001,t+.22);osc.connect(gain);gain.connect(a.destination);osc.start(t);osc.stop(t+.25)}catch(e){}}
+function fx(){if(s.fx)tone(690,.028)}
+function stopMusic(){if(musicTimer){clearInterval(musicTimer);musicTimer=null}}
+function startMusic(){stopMusic();if(!s.music||document.hidden)return;var notes=[392,440,523,440,349,392,329,349,392,523,440,392];tone(notes[musicN++%notes.length],.015);musicTimer=setInterval(function(){if(s.music&&!document.hidden)tone(notes[musicN++%notes.length],.015)},460)}
+function buy(id){if(id==='stall'){if(s.stall)return;if(s.coins<500){s.msg='金幣不足，還不能建造小吃攤。';render();return}s.stall=true;s.coins-=500;s.msg='🌭 小吃攤已開張！';fx();render();return}var a=animal(id);if(!a)return;if(a.req&&pc(a)<9)return;if(s.animals[id]){if(s.coins<30){s.msg='金幣不足，不能餵食。';render();return}s.coins-=30;s.animals[id].mood=Math.min(100,s.animals[id].mood+20);s.msg='💚 已餵食 '+a.name;fx();render();return}if(s.coins<a.cost){s.msg='金幣不足，先開園賺錢吧。';render();return}s.coins-=a.cost;s.animals[id]={mood:80};s.msg='🎉 '+a.name+'入住！圖鑑資料已更新。';fx();render()}
+root.addEventListener('click',function(e){var b=e.target.closest('button');if(!b||!root.contains(b))return;var d=b.dataset;
+if(d.editprofile){openProfile(true);return}
+if(d.speed){s.speed=Number(d.speed);fx();render();return}
+if(d.go){if(d.go==='settings'){s.before=s.tab;s.tab='settings'}else s.tab=d.go;fx();render(true);return}
+if(d.back){s.tab=s.before;render(true);return}
+if(d.buyview){s.tab='build';s.msg='🔨 請在建造清單選擇 '+animal(d.buyview).name+'。';render(true);return}
+if(d.buy){buy(d.buy);return}
+if(d.target){s.target=d.target;fx();render();return}
+if(d.collect){var a=animal(s.target);if(d.collect==='1'&&s.explored===s.day){s.msg='今天已經探索過，下一個遊戲日再來。';render();return}if(d.collect==='1')s.explored=s.day;s.pieces[a.id]=Math.min(9,(s.pieces[a.id]||0)+Number(d.collect));s.msg='🧩 獲得 '+a.name+' 的拼圖，左頁增加了身體區塊！';fx();render();return}
+if(d.view){s.book=index(d.view);s.tab='book';fx();render(true);return}
+if(d.book){s.book=index(d.book);fx();render();return}
+if(d.flip){s.book=Math.max(0,Math.min(A.length-1,s.book+Number(d.flip)));fx();render();return}
+if(d.audio){if(d.audio==='music'){s.music=!s.music;s.music?startMusic():stopMusic()}else if(d.audio==='fx'){s.fx=!s.fx;if(s.fx)fx()}else tone(720,.035);render();return}
+if(d.open){if(s.mode==='ready'){s.mode='running';s.msg='🌅 園區已開園，遊客會自動入園。'}else if(s.mode==='running'){s.mode='paused';s.msg='⏸ 已暫停。'}else if(s.mode==='paused'){s.mode='running';s.msg='▶ 繼續營業。'}else{s.day++;s.min=540;s.mode='running';s.visitors=0;s.acc=0;s.msg='🌅 第 '+s.day+' 天手動開園！'}fx();render();return}
+});
+root.addEventListener('click',function(ev){var b=ev.target.closest('button');if(b&&root.contains(b)){persist()}});
+q('avatars').addEventListener('click',function(e){var b=e.target.closest('[data-avatar]');if(!b)return;avatarSelected=b.dataset.avatar;drawAvatars()});
+q('introStart').addEventListener('click',function(){var name=q('zooInput').value.trim(),keeper=q('keeperInput').value.trim();if(!name||!keeper){q('introErr').textContent='請填寫動物園名稱及園長姓名。';return}if(name.length>18||keeper.length>12){q('introErr').textContent='名稱字數超過限制。';return}
+var choice=root.querySelector('[name=keeperGender]:checked');s.profile={name:name,keeper:keeper,gender:choice?choice.value:'none',avatar:avatarSelected};persist();closeProfile();s.msg=editProfile?'🌿 園長資料已更新！':'🌿 歡迎 '+keeper+' 園長！從建造第一個棲地開始吧。';render(true);persist()});
+function tick(){if(s.mode!=='running')return;var n=nAnimals(),hour=Math.floor(s.min/60),guest=n?Math.max(1,Math.round((2+n*1.5)*(hour>=11&&hour<=16?1.3:.8))):0;s.visitors+=guest;s.coins+=guest*25+(s.stall?Math.round(guest*.4)*29:0);s.min+=10;if(s.min>=1260){s.min=1260;s.mode='closed';s.acc=0;s.coins-=50+n*45+(s.stall?80:0);s.pieces[s.target]=Math.min(9,(s.pieces[s.target]||0)+2);s.msg='🌙 21:00 已自動閉園，獲得 '+animal(s.target).name+' 拼圖 2 片，明天請手動開園。'}render();persist()}
+setInterval(function(){var now=Date.now(),dt=Math.max(0,Math.min(300,now-s.last));s.last=now;if(document.hidden||s.mode!=='running')return;s.acc+=dt*s.speed;while(s.acc>=20000&&s.mode==='running'){s.acc-=20000;tick()}},180);
+document.addEventListener('visibilitychange',function(){s.last=Date.now();if(document.hidden){if(s.mode==='running')s.mode='paused';stopMusic();persist();render()}else if(s.music)startMusic()});window.addEventListener('pagehide',persist);
+render(true);if(!s.profile)openProfile(false);else closeProfile();
+})();
+</script>
+</body></html>
