@@ -634,7 +634,7 @@ const initial={day:1,min:540,mode:'ready',speed:1,coins:2500,visitors:0,totalGue
 const s=JSON.parse(JSON.stringify(initial));let focusBefore='zoo',profileEdit=false,avatarSelected='capy',audioCtx=null,musicInterval=null,musicIndex=0,toastTimer=null,sceneCanvas=null,sceneCtx=null,images={},animation={t:0,food:[],visitors:[]},lastStamp=performance.now();
 const staffCaps={keeper:6,guide:5,vendor:3,cleaner:4,shop:3};
 const hirePrices={keeper:260,guide:220,vendor:210,cleaner:250,shop:230};
-const STORE='pocket_zoo_playable_v18',OLD='pocket_zoo_playable_v17',OLDER='pocket_zoo_playable_v16',LEGACY='pocket_zoo_playable_v15';
+const STORE='pocket_zoo_playable_v116',OLD='pocket_zoo_playable_v18',OLDER='pocket_zoo_playable_v17',LEGACY='pocket_zoo_playable_v16';
 function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function save(){try{const cp={...s};delete cp.acc;delete cp.msg;localStorage.setItem(STORE,JSON.stringify(cp))}catch(e){console.warn('無法儲存進度',e)}}
 function restore(){try{const raw=localStorage.getItem(STORE)||localStorage.getItem(OLD)||localStorage.getItem(OLDER)||localStorage.getItem(LEGACY);if(!raw)return;const old=JSON.parse(raw);if(!old||typeof old!=='object'||!old.profile)return;
